@@ -1,0 +1,441 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work Package Assignment</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 24px 12px;
+        background-color: #fafbff;
+        font-family:
+          "Segoe UI", Arial, sans-serif;
+        color: #1a1c20;
+      }
+      .email-shell {
+        width: 100%;
+      }
+      .email-card {
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+        background: #ffffff;
+        border: 1px solid #c4c8dc;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        padding: 28px 32px 24px;
+        background: linear-gradient(135deg, #0d47a1 0%, #1565c0 55%, #506b9e 100%);
+        color: #ffffff;
+      }
+      .brand {
+        display: inline-table;
+        margin-bottom: 18px;
+      }
+      .brand-mark {
+        display: table-cell;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .brand-copy {
+        display: table-cell;
+        padding-left: 12px;
+        vertical-align: middle;
+      }
+      .brand-name {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+      .brand-tag {
+        margin: 2px 0 0;
+        font-size: 12px;
+        opacity: 0.85;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .header-title {
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.2;
+      }
+      .header-text {
+        margin: 10px 0 0;
+        font-size: 15px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .content {
+        padding: 32px;
+      }
+      .greeting,
+      .body-text,
+      .closing,
+      .description-text {
+        margin: 0 0 18px;
+        font-size: 15px;
+        line-height: 1.7;
+        color: #444858;
+      }
+      .highlight {
+        color: #1565c0;
+        font-weight: 700;
+      }
+      .panel {
+        margin: 24px 0;
+        border: 1px solid #c4c8dc;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #f4f6fd;
+      }
+      .panel-head {
+        padding: 14px 18px;
+        background: #d6e4ff;
+        color: #001945;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .panel-body {
+        padding: 8px 18px 18px;
+        background: #ffffff;
+      }
+      .detail-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .detail-table td {
+        padding: 12px 0;
+        border-bottom: 1px solid #e1e6f4;
+        font-size: 14px;
+        line-height: 1.5;
+        vertical-align: top;
+      }
+      .detail-table tr:last-child td {
+        border-bottom: none;
+      }
+      .label {
+        width: 34%;
+        color: #444858;
+        font-weight: 600;
+      }
+      .value {
+        color: #1a1c20;
+        font-weight: 500;
+      }
+      .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+      .status-active {
+        background: #d6e4ff;
+        color: #001945;
+      }
+      .status-pending {
+        background: #ffdea3;
+        color: #271900;
+      }
+      .status-completed {
+        background: #b7f2ce;
+        color: #002110;
+      }
+      .priority-high {
+        color: #b3261e;
+      }
+      .priority-medium {
+        color: #7c5800;
+      }
+      .priority-low {
+        color: #1b6b3a;
+      }
+      .description-box {
+        margin-top: 12px;
+        padding: 16px 18px;
+        border-left: 4px solid #1565c0;
+        border-radius: 10px;
+        background: #f4f6fd;
+      }
+      .description-text {
+        margin: 0;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .actions {
+        margin-top: 28px;
+        text-align: center;
+      }
+      .button {
+        display: inline-block;
+        margin: 6px 8px;
+        padding: 12px 22px;
+        border-radius: 9999px;
+        background: #1565c0;
+        color: #ffffff !important;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 700;
+      }
+      .button-secondary {
+        background: #506b9e;
+      }
+      .footer {
+        padding: 20px 32px 28px;
+        border-top: 1px solid #e1e6f4;
+        background: #f4f6fd;
+      }
+      .footer p {
+        margin: 0 0 8px;
+        font-size: 12px;
+        line-height: 1.6;
+        color: #444858;
+      }
+      .footer p:last-child {
+        margin-bottom: 0;
+      }
+      @media only screen and (max-width: 640px) {
+        body {
+          padding: 12px;
+        }
+        .header,
+        .content,
+        .footer {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+        .header-title {
+          font-size: 24px;
+        }
+        .label,
+        .value,
+        .detail-table td {
+          display: block;
+          width: 100%;
+        }
+        .label {
+          padding-bottom: 4px !important;
+        }
+        .value {
+          padding-top: 0 !important;
+        }
+        .button {
+          display: block;
+          margin: 10px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <table class="email-shell" role="presentation" cellpadding="0" cellspacing="0">
+      <tr>
+        <td align="center">
+          <table
+            class="email-card"
+            role="presentation"
+            cellpadding="0"
+            cellspacing="0"
+          >
+            <tr>
+              <td class="header">
+                <div class="brand">
+                  <div class="brand-mark">N</div>
+                  <div class="brand-copy">
+                    <p class="brand-name">NexaByte</p>
+                    <p class="brand-tag">Taskflow Workspace</p>
+                  </div>
+                </div>
+                <h1 class="header-title">Work Package Assignment</h1>
+                <p class="header-text">
+                  A new work package has been assigned to you in Taskflow.
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="content">
+                <p class="greeting">
+                  Hello <strong th:text="${assigneeName}">John Doe</strong>,
+                </p>
+                <p class="body-text">
+                  You have been assigned
+                  <span class="highlight" th:text="${subject}">
+                    Implementation of new feature
+                  </span>
+                  in
+                  <span class="highlight" th:text="${projectName}">Sample Project</span>.
+                </p>
+
+                <div class="panel">
+                  <div class="panel-head">Project Details</div>
+                  <div class="panel-body">
+                    <table
+                      class="detail-table"
+                      role="presentation"
+                      cellpadding="0"
+                      cellspacing="0"
+                    >
+                      <tr>
+                        <td class="label">Project ID</td>
+                        <td class="value" th:text="${projectId}">PRJ-001</td>
+                      </tr>
+                      <tr>
+                        <td class="label">Project Name</td>
+                        <td class="value" th:text="${projectName}">Sample Project</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="panel">
+                  <div class="panel-head">Work Package Details</div>
+                  <div class="panel-body">
+                    <table
+                      class="detail-table"
+                      role="presentation"
+                      cellpadding="0"
+                      cellspacing="0"
+                    >
+                      <tr>
+                        <td class="label">Subject</td>
+                        <td class="value" th:text="${subject}">
+                          Implementation of new feature
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="label">Type</td>
+                        <td class="value" th:text="${workPackageType}">Development</td>
+                      </tr>
+                      <tr>
+                        <td class="label">Status</td>
+                        <td class="value">
+                          <span
+                            class="badge"
+                            th:classappend="${workPackageStatus == 'ACTIVE' ? ' status-active' : (workPackageStatus == 'PENDING' ? ' status-pending' : (workPackageStatus == 'COMPLETED' ? ' status-completed' : ''))}"
+                            th:text="${workPackageStatus}"
+                          >
+                            ACTIVE
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="label">Priority</td>
+                        <td class="value">
+                          <span
+                            th:class="${workPackagePriority == 'HIGH' ? 'priority-high' : (workPackagePriority == 'MEDIUM' ? 'priority-medium' : (workPackagePriority == 'LOW' ? 'priority-low' : ''))}"
+                            th:text="${workPackagePriority}"
+                          >
+                            MEDIUM
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="label">Estimated Hours</td>
+                        <td class="value" th:text="${estimatedHours}">40</td>
+                      </tr>
+                      <tr>
+                        <td class="label">Due Date</td>
+                        <td class="value" th:text="${dueDate}">December 31, 2026</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
+                <div
+                  class="panel"
+                  th:if="${description != null and description != ''}"
+                >
+                  <div class="panel-head">Description</div>
+                  <div class="panel-body">
+                    <div class="description-box">
+                      <p class="description-text" th:text="${description}">
+                        Detailed description of the work package goes here.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="panel">
+                  <div class="panel-head">Assignment Details</div>
+                  <div class="panel-body">
+                    <table
+                      class="detail-table"
+                      role="presentation"
+                      cellpadding="0"
+                      cellspacing="0"
+                    >
+                      <tr>
+                        <td class="label">Assigned To</td>
+                        <td class="value">
+                          <strong th:text="${assigneeName}">John Doe</strong>
+                          <span th:if="${assigneeId != null}">
+                            (ID: <span th:text="${assigneeId}">123</span>)
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="label">Accountable Person</td>
+                        <td class="value">
+                          <strong th:text="${accountableName}">Jane Smith</strong>
+                          <span th:if="${accountableId != null}">
+                            (ID: <span th:text="${accountableId}">456</span>)
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <a
+                    class="button"
+                    href="#"
+                    th:href="'https://your-app-url.com/projects/' + ${projectId} + '/workpackages'"
+                  >
+                    View Work Package
+                  </a>
+                  <a
+                    class="button button-secondary"
+                    href="#"
+                    th:href="'https://your-app-url.com/projects/' + ${projectId}"
+                  >
+                    View Project
+                  </a>
+                </div>
+
+                <p class="closing">
+                  Regards,<br />
+                  <strong>NexaByte Team</strong>
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td class="footer">
+                <p>This is an automated notification from Taskflow.</p>
+                <p>
+                  If you have questions, contact your project manager or
+                  accountable person.
+                </p>
+                <p>&copy; 2026 NexaByte. All rights reserved.</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
